@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:news_app/config/theme.dart';
-import 'package:news_app/pages/myhomepage.dart';
+import 'package:news_app/pages/homepage/myhomepage.dart';
 
 void main() {
   runApp(const MyApp());
