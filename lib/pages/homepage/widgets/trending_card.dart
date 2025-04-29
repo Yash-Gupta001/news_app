@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class TrendingCard extends StatelessWidget {
   final String imageUrl;
@@ -6,71 +7,81 @@ class TrendingCard extends StatelessWidget {
   final String time;
   final String title;
   final String author;
-  const TrendingCard({super.key, required this.imageUrl, required this.tag, required this.time, required this.title, required this.author});
+  
+  const TrendingCard({
+    super.key,
+    required this.imageUrl,
+    required this.tag,
+    required this.time,
+    required this.title,
+    required this.author,
+  });
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.only(right: 10),
-      padding: const EdgeInsets.all(5),
-      width: 280,
+      margin: EdgeInsets.only(right: 10.w),  
+      padding: EdgeInsets.all(5.w),
+      width: 280.w,
       decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
+        borderRadius: BorderRadius.circular(20.r),  
         color: Theme.of(context).colorScheme.primaryContainer,
       ),
       child: Column(
         children: [
           Container(
-            height: 200,
+            height: 200.h,  
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),  
               color: Theme.of(context).colorScheme.primaryContainer,
             ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(20.r),  
               child: Image.network(
                 imageUrl,
                 fit: BoxFit.cover,
               ),
             ),
           ),
-          const SizedBox(height: 10),
+          SizedBox(height: 10.h), 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
                 tag,
-                style: Theme.of(context).textTheme.labelSmall,
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 14.sp),  
               ),
-              Text(time, style: Theme.of(context).textTheme.labelSmall),
+              Text(
+                time,
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 14.sp),  
+              ),
             ],
           ),
-          const SizedBox(height: 5),
+          SizedBox(height: 5.h), 
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Flexible(
                 child: Text(
-                  "Save Water Save Life",
+                  title,
                   maxLines: 2,
-                  style: TextStyle(fontSize: 20),
+                  style: TextStyle(fontSize: 20.sp),
                 ),
               ),
             ],
           ),
-          const SizedBox(height: 5),
+          SizedBox(height: 5.h),  
           Row(
             children: [
-              SizedBox(width: 10),
+              SizedBox(width: 10.w),  
               CircleAvatar(
-                radius: 15,
+                radius: 15.r,  
                 backgroundColor: Theme.of(context).colorScheme.primaryContainer,
-                child: const Icon(Icons.person),
               ),
-              const SizedBox(width: 10),
+              SizedBox(width: 10.w), 
               Text(
                 author,
-                style: Theme.of(context).textTheme.labelSmall,
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(fontSize: 14.sp),  
               ),
             ],
           ),
