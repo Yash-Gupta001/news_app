@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:news_app/config/theme.dart';
-import 'package:news_app/controller/bottom_navigation_controller.dart';
 import 'package:news_app/homepage_controller.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
   runApp(const MyApp());
 }
 
@@ -31,3 +31,4 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+// e59adfa2aa794ac4b705c1b92d7c7372
