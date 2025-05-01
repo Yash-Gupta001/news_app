@@ -21,7 +21,7 @@ class TrendingCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
+    return GestureDetector(
       onTap: onTap,
       child: Container(
         margin: EdgeInsets.only(right: 10.w),
@@ -96,11 +96,13 @@ class TrendingCard extends StatelessWidget {
                 CircleAvatar(
                   radius: 15,
                   backgroundColor: Theme.of(context).colorScheme.primary,
-                  child: Text(
-                    author[0],
-                    style: const TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold,
+                  child: Center(
+                    child: Text(
+                      author[0],
+                      style: const TextStyle(
+                        fontSize: 15,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 ),

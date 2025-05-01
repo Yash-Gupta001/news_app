@@ -1,32 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart';
+import 'package:news_app/common_widgets/back_appbar.dart';
+import 'package:news_app/model/news_model.dart';
 
 class NewsDetailPage extends StatelessWidget {
-  const NewsDetailPage({super.key});
+  final NewsModel news;
+  const NewsDetailPage({super.key, required this.news});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        title: Row(
-          children: [
-            InkWell(
-              onTap: () {
-                Get.back(); 
-              },
-              child: Row(
-                children: [
-                  Icon(Icons.arrow_back_ios_new),
-                  SizedBox(width: 5),
-                  Text("Back"),
-                ],
-              ),
-            ),
-          ],
-        ),
-      ),
+      appBar: const BackAppbar(),
 
       body: SafeArea(
         child: Padding(
@@ -35,29 +19,31 @@ class NewsDetailPage extends StatelessWidget {
             child: Column(
               children: [
                 SizedBox(height: 20.h),
+
                 Container(
-                  height: 330.h,
+                  height: 200.h,
+                  width: double.infinity,
                   decoration: BoxDecoration(
-                    color: Colors.red,
                     borderRadius: BorderRadius.circular(20.r),
                   ),
-                  child: Row(
-                    children: [
-                      Expanded(
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(20.r),
-                          child: Image.network(
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRJ4EghSnJSFPI0IiFRHVz7XitNCKJBuLmclziJSNPbfTzummh9Qn6Pol06M-4c6C7W8CVsKQ&s",
-                            fit: BoxFit.cover,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(20.r),
+                    child: Image.network(
+                      news.urlToImage ??
+                          "https://static.vecteezy.com/system/resources/previews/000/198/210/original/breaking-news-background-with-earth-planet-vector.jpg",
+                      fit: BoxFit.cover,
+                      errorBuilder:
+                          (context, error, stackTrace) => Icon(
+                            Icons.broken_image,
+                            size: 50,
+                            color: Colors.grey,
                           ),
-                        ),
-                      ),
-                    ],
+                    ),
                   ),
                 ),
                 SizedBox(height: 20.h),
                 Text(
-                  "Title",
+                  news.title ?? 'No Title Available',
                   style: TextStyle(
                     fontSize: 24.sp,
                     fontWeight: FontWeight.bold,
@@ -66,24 +52,34 @@ class NewsDetailPage extends StatelessWidget {
                 SizedBox(height: 20.h),
                 Row(
                   children: [
-                    Text("Date", style: Theme.of(context).textTheme.labelSmall),
+                    Text(
+                      news.publishedAt!,
+                      style: Theme.of(context).textTheme.labelSmall,
+                    ),
                   ],
                 ),
                 SizedBox(height: 10.h),
                 Row(
                   children: [
-                    CircleAvatar(radius: 15.r, backgroundColor: Colors.red),
-                    SizedBox(width: 10.w),
-
-                    Text(
-                      "Author",
-                      style: TextStyle(
-                        fontSize: 18.sp,
-                        color: Theme.of(context).colorScheme.secondaryContainer,
+                    CircleAvatar(
+                      radius: 15.r,
+                      backgroundColor: Theme.of(context).colorScheme.primary,
+                      child: Text(
+                        (news.author?.isNotEmpty == true)
+                            ? news.author![0]
+                            : '?',
+                        style: Theme.of(
+                          context,
+                        ).textTheme.bodyLarge?.copyWith(fontSize: 12.sp),
                       ),
                     ),
-
                     SizedBox(width: 10.w),
+                    Text(
+                      news.author!,
+                      style: Theme.of(
+                        context,
+                      ).textTheme.bodyLarge?.copyWith(fontSize: 12.sp),
+                    ),
                   ],
                 ),
                 SizedBox(height: 20.h),
@@ -91,7 +87,7 @@ class NewsDetailPage extends StatelessWidget {
                   children: [
                     Flexible(
                       child: Text(
-                        "lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+                        news.description ?? "No Description Avialable",
                         style: TextStyle(
                           fontSize: 18.sp,
                           color:
