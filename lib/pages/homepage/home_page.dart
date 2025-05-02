@@ -116,7 +116,7 @@ class Homepage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    "News for you",
+                    "News for You",
                     style: Theme.of(
                       context,
                     ).textTheme.bodyLarge?.copyWith(fontSize: 18.sp),
@@ -160,75 +160,77 @@ class Homepage extends StatelessWidget {
                 ),
               ),
 
+              SizedBox(height: 20.h),
               // Apple News
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text(
-              //       "Apple News",
-              //       style: Theme.of(
-              //         context,
-              //       ).textTheme.bodyLarge?.copyWith(fontSize: 18.sp),
-              //     ),
-              //     GestureDetector(
-              //       onTap: () {
-              //         // Get.to(NewsForYou());
-              //       },
-              //       child: Text(
-              //         "See All",
-              //         style: Theme.of(
-              //           context,
-              //         ).textTheme.labelSmall?.copyWith(fontSize: 14.sp),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // SizedBox(height: 20.h),
-              // Obx(
-              //   () =>
-              //       newsController.isNewsForYouLoading.value
-              //           ? const Center(child: CircularProgressIndicator())
-              //           : newsController.isAppleAccessDenied.value
-              //           ? Center(
-              //             child: Column(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: [
-              //                 Image.network(
-              //                   "https://cdni.iconscout.com/illustration/premium/thumb/customer-rating-6992005-5706489.png",
-              //                   width: 250.w,
-              //                   height: 250.h,
-              //                 ),
-              //                 SizedBox(height: 20.h),
-              //                 Text(
-              //                   "You don't have access to this section.",
-              //                   style: TextStyle(fontSize: 16.sp),
-              //                 ),
-              //               ],
-              //             ),
-              //           )
-              //           : SingleChildScrollView(
-              //             child: Column(
-              //               children:
-              //                   newsController.apple5News
-              //                       .map(
-              //                         (e) => NewsTile(
-              //                           ontap: () {
-              //                             Get.to(() => NewsDetailPage(news: e));
-              //                           },
-              //                           imageUrl:
-              //                               e.urlToImage?.isNotEmpty == true
-              //                                   ? e.urlToImage!
-              //                                   : "https://static.vecteezy.com/system/resources/previews/000/198/210/original/breaking-news-background-with-earth-planet-vector.jpg",
-              //                           title: e.title ?? "No Title",
-              //                           author: e.author ?? "Unknown",
-              //                           time: e.publishedAt ?? "Unknown",
-              //                         ),
-              //                       )
-              //                       .toList(),
-              //             ),
-              //           ),
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Apple News",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(fontSize: 18.sp),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // Get.to(NewsForYou());
+                    },
+                    child: Text(
+                      "See All",
+                      style: Theme.of(
+                        context,
+                      ).textTheme.labelSmall?.copyWith(fontSize: 14.sp),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+              Obx(
+                () =>
+                    newsController.isNewsForYouLoading.value
+                        ? const Center(child: CircularProgressIndicator())
+                        : newsController.isAppleAccessDenied.value
+                        ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.network(
+                                "https://cdni.iconscout.com/illustration/premium/thumb/customer-rating-6992005-5706489.png",
+                                width: 250.w,
+                                height: 250.h,
+                              ),
+                              SizedBox(height: 20.h),
+                              Text(
+                                "You don't have access to this section.",
+                                style: TextStyle(fontSize: 16.sp),
+                              ),
+                            ],
+                          ),
+                        )
+                        : SingleChildScrollView(
+                          child: Column(
+                            children:
+                                newsController.apple5News
+                                    .map(
+                                      (e) => NewsTile(
+                                        ontap: () {
+                                          Get.to(() => NewsDetailPage(news: e));
+                                        },
+                                        imageUrl:
+                                            e.urlToImage?.isNotEmpty == true
+                                                ? e.urlToImage!
+                                                : "https://static.vecteezy.com/system/resources/previews/000/198/210/original/breaking-news-background-with-earth-planet-vector.jpg",
+                                        title: e.title ?? "No Title",
+                                        author: e.author ?? "Unknown",
+                                        time: e.publishedAt ?? "Unknown",
+                                      ),
+                                    )
+                                    .toList(),
+                          ),
+                        ),
+              ),
 
+              SizedBox(height: 20.h),
               // Business news
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -256,7 +258,7 @@ class Homepage extends StatelessWidget {
               Obx(
                 () => SingleChildScrollView(
                   child:
-                      newsController.isNewsForYouLoading.value
+                      newsController.isBusinessLoading.value
                           ? CircularProgressIndicator()
                           : Column(
                             children: [
@@ -279,73 +281,74 @@ class Homepage extends StatelessWidget {
               ),
 
               // tesla news
-              // Row(
-              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //   children: [
-              //     Text(
-              //       "Tesla News",
-              //       style: Theme.of(
-              //         context,
-              //       ).textTheme.bodyLarge?.copyWith(fontSize: 18.sp),
-              //     ),
-              //     GestureDetector(
-              //       onTap: () {
-              //         // Get.to(NewsForYou());
-              //       },
-              //       child: Text(
-              //         "See All",
-              //         style: Theme.of(
-              //           context,
-              //         ).textTheme.labelSmall?.copyWith(fontSize: 14.sp),
-              //       ),
-              //     ),
-              //   ],
-              // ),
-              // SizedBox(height: 20.h),
-              // Obx(
-              //   () =>
-              //       newsController.isNewsForYouLoading.value
-              //           ? const Center(child: CircularProgressIndicator())
-              //           : newsController.isAppleAccessDenied.value
-              //           ? Center(
-              //             child: Column(
-              //               mainAxisAlignment: MainAxisAlignment.center,
-              //               children: [
-              //                 Image.network(
-              //                   "https://cdni.iconscout.com/illustration/premium/thumb/customer-rating-6992005-5706489.png",
-              //                   width: 250.w,
-              //                   height: 250.h,
-              //                 ),
-              //                 SizedBox(height: 20.h),
-              //                 Text(
-              //                   "You don't have access to this section.",
-              //                   style: TextStyle(fontSize: 16.sp),
-              //                 ),
-              //               ],
-              //             ),
-              //           )
-              //           : SingleChildScrollView(
-              //             child: Column(
-              //               children:
-              //                   newsController.tesla5News
-              //                       .map(
-              //                         (e) => NewsTile(
-              //                           ontap: () {
-              //                             Get.to(() => NewsDetailPage(news: e));
-              //                           },
-              //                           imageUrl:
-              //                               e.urlToImage?.isNotEmpty == true
-              //                                   ? e.urlToImage!
-              //                                   : "https://static.vecteezy.com/system/resources/previews/000/198/210/original/breaking-news-background-with-earth-planet-vector.jpg",
-              //                           title: e.title ?? "No Title",
-              //                           author: e.author ?? "Unknown",
-              //                           time: e.publishedAt ?? "Unknown",
-              //                         ),
-              //                       )
-              //                       .toList(),
-              //             ),
-              //           ),
-              // ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    "Tesla News",
+                    style: Theme.of(
+                      context,
+                    ).textTheme.bodyLarge?.copyWith(fontSize: 18.sp),
+                  ),
+                  GestureDetector(
+                    onTap: () {
+                      // Get.to(NewsForYou());
+                    },
+                    child: Text(
+                      "See All",
+                      style: Theme.of(
+                        context,
+                      ).textTheme.labelSmall?.copyWith(fontSize: 14.sp),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20.h),
+              Obx(
+                () =>
+                    newsController.isNewsForYouLoading.value
+                        ? const Center(child: CircularProgressIndicator())
+                        : newsController.isAppleAccessDenied.value
+                        ? Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.network(
+                                "https://cdni.iconscout.com/illustration/premium/thumb/customer-rating-6992005-5706489.png",
+                                width: 250.w,
+                                height: 250.h,
+                              ),
+                              SizedBox(height: 20.h),
+                              Text(
+                                "You don't have access to this section.",
+                                style: TextStyle(fontSize: 16.sp),
+                              ),
+                            ],
+                          ),
+                        )
+                        : SingleChildScrollView(
+                          child: Column(
+                            children:
+                                newsController.tesla5News
+                                    .map(
+                                      (e) => NewsTile(
+                                        ontap: () {
+                                          Get.to(() => NewsDetailPage(news: e));
+                                        },
+                                        imageUrl:
+                                            e.urlToImage?.isNotEmpty == true
+                                                ? e.urlToImage!
+                                                : "https://static.vecteezy.com/system/resources/previews/000/198/210/original/breaking-news-background-with-earth-planet-vector.jpg",
+                                        title: e.title ?? "No Title",
+                                        author: e.author ?? "Unknown",
+                                        time: e.publishedAt ?? "Unknown",
+                                      ),
+                                    )
+                                    .toList(),
+                          ),
+                        ),
+              ),
+              SizedBox(height: 90.h),
             ],
           ),
         ),

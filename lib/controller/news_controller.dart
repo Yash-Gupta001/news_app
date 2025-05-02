@@ -25,17 +25,23 @@ class NewsController extends GetxController {
   FlutterTts flutterTts = FlutterTts();
 
   // for status code 426
-  // var isAppleAccessDenied = false.obs;
-  // var isTeslaAccessDenied = false.obs;
+  var isAppleAccessDenied = false.obs;
+  var isTeslaAccessDenied = false.obs;
 
   @override
-  void onInit() async {
+  void onInit() {
     super.onInit();
-    getNewsForYou();
-    getTrendingNews();
-    // getAppleNews();
-    // getTeslaNews();
-    getBusinessNews();
+    loadAllNews();
+  }
+
+  void loadAllNews() async {
+    await Future.wait([
+      getNewsForYou(),
+      getTrendingNews(),
+      getAppleNews(),
+      getTeslaNews(),
+      getBusinessNews(),
+    ]);
   }
 
   // method to get trending news
@@ -84,7 +90,7 @@ class NewsController extends GetxController {
         for (var news in articles) {
           newsForYouList.add(NewsModel.fromJson(news));
         }
-        newsForYou5.value = newsForYouList.sublist(0, 5).obs;
+        newsForYou5.assignAll(newsForYouList.take(5));
       } else {
         print("Error fetching getNewsForYou news: ${response.statusCode}");
       }
@@ -98,102 +104,100 @@ class NewsController extends GetxController {
 
   // method to get Apple news
   // this api is paid status code = 426
-//   Future<void> getAppleNews() async {
-//     isAppleLoading.value = true;
-//     isAppleAccessDenied.value = false; // Reset before request
-//     print("Fetching Apple news...");
+  Future<void> getAppleNews() async {
+    isAppleLoading.value = true;
+    isAppleAccessDenied.value = false; // Reset before request
+    print("Fetching Apple news...");
 
-//     final url =
-//         "${ApiConstants.baseUrl}/everything?q=apple&from=2024-01-21&to=2024-01-21&sortBy=popularity&apiKey=${ApiConstants.apiKey}";
+    final url =
+        "${ApiConstants.baseUrl}/everything?q=apple&from=2024-01-21&to=2024-01-21&sortBy=popularity&apiKey=${ApiConstants.apiKey}";
 
-//     try {
-//       final response = await http.get(Uri.parse(url));
-//       print("Response status: ${response.statusCode}");
+    try {
+      final response = await http.get(Uri.parse(url));
+      print("Response status: ${response.statusCode}");
 
-//       if (response.statusCode == 200) {
-//         print("Apple news fetched successfully.");
-//         final body = jsonDecode(response.body);
-//         final articles = body["articles"];
-//         print("Total articles fetched: ${articles.length}");
+      if (response.statusCode == 200) {
+        print("Apple news fetched successfully.");
+        final body = jsonDecode(response.body);
+        final articles = body["articles"];
+        print("Total articles fetched: ${articles.length}");
 
-//         appleNewsList.clear();
+        appleNewsList.clear();
 
-//         for (var news in articles) {
-//           appleNewsList.add(NewsModel.fromJson(news));
-//         }
+        for (var news in articles) {
+          appleNewsList.add(NewsModel.fromJson(news));
+        }
 
-//         isAppleAccessDenied.value = false;
+        isAppleAccessDenied.value = false;
 
-//         apple5News.value = appleNewsList.sublist(0, 5).obs;
+        apple5News.value = appleNewsList.sublist(0, 5).obs;
 
-//         print("apple5News count: ${apple5News.length}");
-//       } else if (response.statusCode == 426) {
-//         print("You don't have access to this section (status 426).");
-//         isAppleAccessDenied.value = true;
+        print("apple5News count: ${apple5News.length}");
+      } else if (response.statusCode == 426) {
+        print("You don't have access to this section (status 426).");
+        isAppleAccessDenied.value = true;
 
-//         appleNewsList.clear();
-//         apple5News.clear();
-//       } else {
-//         print("Error fetching Apple news: ${response.statusCode}");
-//       }
-//     } catch (e) {
-//       print("Exception in getAppleNews: $e");
-//     } finally {
-//       isAppleLoading.value = false;
-//       print("Apple news loading complete.");
-//     }
-//   }
+        appleNewsList.clear();
+        apple5News.clear();
+      } else {
+        print("Error fetching Apple news: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Exception in getAppleNews: $e");
+    } finally {
+      isAppleLoading.value = false;
+      print("Apple news loading complete.");
+    }
+  }
 
-//   // method to get tesla news
-//   // this api is paid status code = 426
-//   Future<void> getTeslaNews() async {
-//   isTeslaLoading.value = true;
-//   isTeslaAccessDenied.value = false; // Make sure to declare this in your controller if not yet
+  //   // method to get tesla news
+  //   // this api is paid status code = 426
+  Future<void> getTeslaNews() async {
+    isTeslaLoading.value = true;
+    isTeslaAccessDenied.value =
+        false; // Make sure to declare this in your controller if not yet
 
-//   var baseURL =
-//       "${ApiConstants.baseUrl}/everything?q=tesla&from=2023-12-22&sortBy=publishedAt&apiKey=${ApiConstants.apiKey}";
+    var baseURL =
+        "${ApiConstants.baseUrl}/everything?q=tesla&from=2023-12-22&sortBy=publishedAt&apiKey=${ApiConstants.apiKey}";
 
-//   try {
-//     var response = await http.get(Uri.parse(baseURL));
-//     print("Tesla response status: ${response.statusCode}");
+    try {
+      var response = await http.get(Uri.parse(baseURL));
+      print("Tesla response status: ${response.statusCode}");
 
-//     if (response.statusCode == 200) {
-//       print("Tesla news fetched successfully.");
-//       print(response.body);
+      if (response.statusCode == 200) {
+        print("Tesla news fetched successfully.");
+        print(response.body);
 
-//       var body = jsonDecode(response.body);
-//       var articles = body["articles"];
-//       print("Total Tesla articles fetched: ${articles.length}");
+        var body = jsonDecode(response.body);
+        var articles = body["articles"];
+        print("Total Tesla articles fetched: ${articles.length}");
 
-//       teslaNewsList.clear();
-//       for (var news in articles) {
-//         teslaNewsList.add(NewsModel.fromJson(news));
-//       }
+        teslaNewsList.clear();
+        for (var news in articles) {
+          teslaNewsList.add(NewsModel.fromJson(news));
+        }
 
-//       isTeslaAccessDenied.value = false; // reset if previously true
+        isTeslaAccessDenied.value = false; // reset if previously true
 
-//       tesla5News.value = teslaNewsList.sublist(0, 5).obs;
+        tesla5News.value = teslaNewsList.sublist(0, 5).obs;
 
-//       print("tesla5News count: ${tesla5News.length}");
-//     } 
-//     else if (response.statusCode == 426) {
-//       print("You don't have access to Tesla news (status code 426).");
-//       isTeslaAccessDenied.value = true;
+        print("tesla5News count: ${tesla5News.length}");
+      } else if (response.statusCode == 426) {
+        print("You don't have access to Tesla news (status code 426).");
+        isTeslaAccessDenied.value = true;
 
-//       teslaNewsList.clear();
-//       tesla5News.clear();
-//     } 
-//     else {
-//       print("Something went wrong in Tesla News: ${response.statusCode}");
-//     }
-//   } catch (e) {
-//     print("Exception in getTeslaNews: $e");
-//   } finally {
-//     isTeslaLoading.value = false;
-//     print("Tesla news loading complete.");
-//   }
-// }
-
+        teslaNewsList.clear();
+        tesla5News.clear();
+      } else {
+        print("Something went wrong in Tesla News: ${response.statusCode}");
+      }
+    } catch (e) {
+      print("Exception in getTeslaNews: $e");
+    } finally {
+      isTeslaLoading.value = false;
+      print("Tesla news loading complete.");
+    }
+  }
 
   // method to get business news
   Future<void> getBusinessNews() async {
@@ -222,34 +226,34 @@ class NewsController extends GetxController {
     }
   }
 
-  // Future<void> searchNews(String search) async {
-  //   isNewsForYouLoading.value = true;
-  //   var baseURL =
-  //       "https://newsapi.org/v2/everything?q=$search&apiKey=ea97c6bb67b040759084c3c20ea5e5cf";
-  //   try {
-  //     var response = await http.get(Uri.parse(baseURL));
-  //     print(response);
-  //     if (response.statusCode == 200) {
-  //       print(response.body);
-  //       var body = jsonDecode(response.body);
-  //       var articals = body["articles"];
-  //       newsForYouList.clear();
-  //       int i = 0;
-  //       for (var news in articals) {
-  //         i++;
-  //         newsForYouList.add(NewsModel.fromJson(news));
-  //         if (i == 10) {
-  //           break;
-  //         }
-  //       }
-  //     } else {
-  //       print("Something went Wrong in Tranding News");
-  //     }
-  //   } catch (ex) {
-  //     print(ex);
-  //   }
-  //   isNewsForYouLoading.value = false;
-  // }
+  Future<void> searchNews(String search) async {
+    isNewsForYouLoading.value = true;
+    var baseURL =
+        "https://newsapi.org/v2/everything?q=$search&apiKey=ea97c6bb67b040759084c3c20ea5e5cf";
+    try {
+      var response = await http.get(Uri.parse(baseURL));
+      print(response);
+      if (response.statusCode == 200) {
+        print(response.body);
+        var body = jsonDecode(response.body);
+        var articals = body["articles"];
+        newsForYouList.clear();
+        int i = 0;
+        for (var news in articals) {
+          i++;
+          newsForYouList.add(NewsModel.fromJson(news));
+          if (i == 10) {
+            break;
+          }
+        }
+      } else {
+        print("Something went Wrong in Tranding News");
+      }
+    } catch (ex) {
+      print(ex);
+    }
+    isNewsForYouLoading.value = false;
+  }
 
   // Future<void> speak(String text) async {
   //   isSpeaking.value = true;
@@ -262,6 +266,6 @@ class NewsController extends GetxController {
 
   // void stop() async {
   //   await flutterTts.stop();
-  //   isSpeeking.value = false;
+  //   isSpeaking.value = false;
   // }
 }
