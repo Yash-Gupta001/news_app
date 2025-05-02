@@ -32,6 +32,19 @@ class NewsController extends GetxController {
   void onInit() {
     super.onInit();
     loadAllNews();
+
+    flutterTts.setCompletionHandler(() {
+      isSpeaking.value = false;
+    });
+
+    flutterTts.setCancelHandler(() {
+      isSpeaking.value = false;
+    });
+
+    flutterTts.setErrorHandler((message) {
+      print("TTS Error: $message");
+      isSpeaking.value = false;
+    });
   }
 
   void loadAllNews() async {
@@ -229,7 +242,7 @@ class NewsController extends GetxController {
   Future<void> searchNews(String search) async {
     isNewsForYouLoading.value = true;
     var baseURL =
-        "https://newsapi.org/v2/everything?q=$search&apiKey=ea97c6bb67b040759084c3c20ea5e5cf";
+        "${ApiConstants.baseUrl}/everything?q=$search&apiKey=${ApiConstants.apiKey}";
     try {
       var response = await http.get(Uri.parse(baseURL));
       print(response);
@@ -242,12 +255,12 @@ class NewsController extends GetxController {
         for (var news in articals) {
           i++;
           newsForYouList.add(NewsModel.fromJson(news));
-          if (i == 10) {
+          if (i == 15) {
             break;
           }
         }
       } else {
-        print("Something went Wrong in Tranding News");
+        print("Something went Wrong in Trending News");
       }
     } catch (ex) {
       print(ex);
@@ -255,17 +268,22 @@ class NewsController extends GetxController {
     isNewsForYouLoading.value = false;
   }
 
-  // Future<void> speak(String text) async {
-  //   isSpeaking.value = true;
-  //   await flutterTts.setLanguage("en-US");
-  //   await flutterTts.setPitch(1);
-  //   await flutterTts.setSpeechRate(0.5);
-  //   await flutterTts.speak(text);
-  //   isSpeaking.value = false;
-  // }
+  Future<void> speak(String text) async {
+    isSpeaking.value = true;
+    await flutterTts.setLanguage("en-US");
+    await flutterTts.setPitch(1);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.speak(text);
+  }
 
-  // void stop() async {
-  //   await flutterTts.stop();
-  //   isSpeaking.value = false;
-  // }
+  void stop() async {
+    await flutterTts.stop();
+    isSpeaking.value = false;
+  }
+
+  @override
+  void onClose() {
+    flutterTts.stop();
+    super.onClose();
+  }
 }

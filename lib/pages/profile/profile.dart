@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/common_widgets/back_appbar.dart';
+import 'package:news_app/components/back_appbar.dart';
 
 class Profilepage extends StatelessWidget {
   const Profilepage({super.key});

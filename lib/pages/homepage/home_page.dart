@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:news_app/components/news_tile_loading_card.dart';
+import 'package:news_app/components/trending_loading_card.dart';
 import 'package:news_app/controller/news_controller.dart';
-import 'package:news_app/pages/homepage/widgets/news_tile.dart';
+import 'package:news_app/pages/homepage/widgets/news_tile_card.dart';
 import 'package:news_app/pages/homepage/widgets/trending_card.dart';
 import 'package:news_app/pages/newsdetail/news_detail_page.dart';
 import 'package:news_app/pages/profile/profile.dart';
@@ -90,7 +92,12 @@ class Homepage extends StatelessWidget {
                   scrollDirection: Axis.horizontal,
                   child:
                       newsController.isTrendingLoading.value
-                          ? CircularProgressIndicator()
+                          ? Row(
+                            children: [
+                              TrendingLoadingCard(),
+                              TrendingLoadingCard(),
+                            ],
+                          )
                           : Row(
                             children: [
                               ...newsController.trendingNewsList.map(
@@ -99,7 +106,7 @@ class Homepage extends StatelessWidget {
                                     Get.to(NewsDetailPage(news: e));
                                   },
                                   imageUrl: e.urlToImage!,
-                                  tag: 'Trending no 1',
+                                  tag: 'Trending',
                                   time: e.publishedAt!,
                                   title: e.title ?? '',
                                   author: e.author ?? 'unknown',
@@ -139,7 +146,15 @@ class Homepage extends StatelessWidget {
                 () => SingleChildScrollView(
                   child:
                       newsController.isNewsForYouLoading.value
-                          ? CircularProgressIndicator()
+                          ? Column(
+                            children: [
+                              NewsTileLoading(),
+                              NewsTileLoading(),
+                              NewsTileLoading(),
+                              NewsTileLoading(),
+                              NewsTileLoading(),
+                            ],
+                          )
                           : Column(
                             children: [
                               ...newsController.newsForYou5.map(
@@ -187,8 +202,13 @@ class Homepage extends StatelessWidget {
               SizedBox(height: 20.h),
               Obx(
                 () =>
-                    newsController.isNewsForYouLoading.value
-                        ? const Center(child: CircularProgressIndicator())
+                    newsController.isAppleLoading.value
+                        ? Row(
+                          children: [
+                            TrendingLoadingCard(),
+                            TrendingLoadingCard(),
+                          ],
+                        )
                         : newsController.isAppleAccessDenied.value
                         ? Center(
                           child: Column(
@@ -212,8 +232,8 @@ class Homepage extends StatelessWidget {
                             children:
                                 newsController.apple5News
                                     .map(
-                                      (e) => NewsTile(
-                                        ontap: () {
+                                      (e) => TrendingCard(
+                                        onTap: () {
                                           Get.to(() => NewsDetailPage(news: e));
                                         },
                                         imageUrl:
@@ -223,6 +243,7 @@ class Homepage extends StatelessWidget {
                                         title: e.title ?? "No Title",
                                         author: e.author ?? "Unknown",
                                         time: e.publishedAt ?? "Unknown",
+                                        tag: 'Apple News',
                                       ),
                                     )
                                     .toList(),
@@ -259,7 +280,15 @@ class Homepage extends StatelessWidget {
                 () => SingleChildScrollView(
                   child:
                       newsController.isBusinessLoading.value
-                          ? CircularProgressIndicator()
+                          ? Column(
+                            children: [
+                              NewsTileLoading(),
+                              NewsTileLoading(),
+                              NewsTileLoading(),
+                              NewsTileLoading(),
+                              NewsTileLoading(),
+                            ],
+                          )
                           : Column(
                             children: [
                               ...newsController.business5News.map(
@@ -306,8 +335,16 @@ class Homepage extends StatelessWidget {
               SizedBox(height: 20.h),
               Obx(
                 () =>
-                    newsController.isNewsForYouLoading.value
-                        ? const Center(child: CircularProgressIndicator())
+                    newsController.isTeslaLoading.value
+                        ? Column(
+                          children: [
+                            NewsTileLoading(),
+                            NewsTileLoading(),
+                            NewsTileLoading(),
+                            NewsTileLoading(),
+                            NewsTileLoading(),
+                          ],
+                        )
                         : newsController.isAppleAccessDenied.value
                         ? Center(
                           child: Column(

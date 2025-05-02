@@ -36,7 +36,7 @@ class SearchWidget extends StatelessWidget {
                     ? Container(
                       width: 50.w,
                       height: 50.h,
-                      padding: EdgeInsets.all(10),
+                      padding: EdgeInsets.all(10.r),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(10.r),
                         color: Theme.of(context).colorScheme.primary,

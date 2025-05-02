@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:news_app/common_widgets/back_appbar.dart';
+import 'package:news_app/components/back_appbar.dart';
 import 'package:news_app/controller/news_controller.dart';
-import 'package:news_app/pages/homepage/widgets/news_tile.dart';
+import 'package:news_app/pages/homepage/widgets/news_tile_card.dart';
 import 'package:news_app/pages/newsdetail/news_detail_page.dart';
 
 class NewsForYou extends StatelessWidget {
