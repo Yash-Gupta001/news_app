@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
-import 'package:news_app/components/back_appbar.dart';
+import 'package:news_app/components/custom_appbar.dart';
 import 'package:news_app/controller/news_controller.dart';
 import 'package:news_app/model/news_model.dart';
 
@@ -23,7 +23,7 @@ class NewsDetailPage extends StatelessWidget {
       },
 
       child: Scaffold(
-        appBar: const BackAppbar(),
+        appBar: const CustomAppbar(),
 
         body: SafeArea(
           child: Padding(

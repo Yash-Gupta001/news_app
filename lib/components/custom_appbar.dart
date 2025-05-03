@@ -2,16 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class BackAppbar extends StatelessWidget implements PreferredSizeWidget {
+class CustomAppbar extends StatelessWidget implements PreferredSizeWidget {
   final String title;
 
-  const BackAppbar({super.key, this.title = "Back"});
+  const CustomAppbar({super.key, this.title = "Back"});
 
   @override
   Widget build(BuildContext context) {
     return AppBar(
       automaticallyImplyLeading: false,
-      title: InkWell(
+      title: GestureDetector(
         onTap: () => Get.back(),
         child: Row(
           children: [

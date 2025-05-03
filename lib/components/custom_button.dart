@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:get/get.dart'; // Make sure GetX is imported if using Get.offAll
 
 class CustomButton extends StatelessWidget {
   final String text;

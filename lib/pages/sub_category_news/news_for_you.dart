@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:news_app/components/back_appbar.dart';
+import 'package:news_app/components/custom_appbar.dart';
 import 'package:news_app/controller/news_controller.dart';
 import 'package:news_app/pages/homepage/widgets/news_tile_card.dart';
 import 'package:news_app/pages/newsdetail/news_detail_page.dart';
@@ -14,7 +14,7 @@ class NewsForYou extends StatelessWidget {
     NewsController newsController = Get.put(NewsController());
 
     return Scaffold(
-      appBar: BackAppbar(title: 'News For You'),
+      appBar: CustomAppbar(title: 'News For You'),
       body: Obx(
         () => SingleChildScrollView(
           padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 15.h),

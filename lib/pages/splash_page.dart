@@ -10,23 +10,59 @@ class SplashPage extends StatefulWidget {
   State<SplashPage> createState() => _SplashPageState();
 }
 
-class _SplashPageState extends State<SplashPage> {
+class _SplashPageState extends State<SplashPage>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _opacity;
+
   @override
   void initState() {
     super.initState();
+
+    // Initialize the animation controller for fade-in effect
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    );
+    _opacity = Tween<double>(begin: 0.0, end: 1.0).animate(_controller);
+
+    // Start the fade-in animation
+    _controller.forward();
+
+    // Navigate after 1.3 seconds
     Timer(const Duration(milliseconds: 1300), () {
-      Get.off(() => LoginPage()); 
+      Get.off(() => const LoginPage());
     });
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose(); // Dispose of the controller when done
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
-      body: Center(
-        child: Image.asset(
-          'Assets/icon.png',
-          width: 120,
+      // Background Gradient
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.blueAccent, Colors.purpleAccent],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
+        ),
+        child: Center(
+          child: FadeTransition(
+            opacity: _opacity,
+            child: Image.asset(
+              'Assets/icon.png',
+              width: 180, // Adjust size as needed
+              height: 180, // Adjust size as needed
+              fit: BoxFit.contain,
+            ),
+          ),
         ),
       ),
     );
