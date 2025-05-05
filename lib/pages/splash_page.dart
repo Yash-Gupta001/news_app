@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:news_app/pages/login/login_page.dart';
 import 'dart:async';
 import 'package:get/get.dart';
+import 'package:news_app/pages/auth/login_page.dart';
 
 class SplashPage extends StatefulWidget {
   const SplashPage({super.key});
@@ -31,7 +31,7 @@ class _SplashPageState extends State<SplashPage>
 
     // Navigate after 1.3 seconds
     Timer(const Duration(milliseconds: 1300), () {
-      Get.off(() => const LoginPage());
+      Get.off(() => LoginPage());
     });
   }
 
